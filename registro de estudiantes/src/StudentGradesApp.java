@@ -16,17 +16,17 @@ public class StudentGradesApp extends JFrame {
         students = new ArrayList<>();
         loadStudents();
 
-        setTitle("Student Grades");
+        setTitle("Calificaciones de los estudiantes");
         setSize(400, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
-        JLabel nameLabel = new JLabel("Name:");
+        JLabel nameLabel = new JLabel("Nombre:");
         nameField = new JTextField(20);
-        JLabel gradeLabel = new JLabel("Grade:");
+        JLabel gradeLabel = new JLabel("calificacion:");
         gradeField = new JTextField(5);
 
-        JButton addButton = new JButton("Add Student");
+        JButton addButton = new JButton("Añadir estudiante");
         addButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -34,7 +34,7 @@ public class StudentGradesApp extends JFrame {
             }
         });
 
-        JButton calculateButton = new JButton("Calculate Average");
+        JButton calculateButton = new JButton("Calcular promedio");
         calculateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -56,12 +56,12 @@ public class StudentGradesApp extends JFrame {
 
 
     private void addStudent() {
-        String name = nameField.gettext();
+        String name = nameField.getText();
         double grade;
         try {
             grade = Double.parseDouble(gradeField.getText());
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Please enter a valid grade.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Por favor ingrese una calificación válida.", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -73,7 +73,7 @@ public class StudentGradesApp extends JFrame {
 
     private void calculateAverage() {
         if (students.isEmpty()) {
-            resultArea.setText("No students to calculate.");
+            resultArea.setText("No hay estudiantes para calcular.");
             return;
         }
 
@@ -84,8 +84,8 @@ public class StudentGradesApp extends JFrame {
         double average = sum / students.size();
 
         StringBuilder result = new StringBuilder();
-        result.append("Average grade: ").append(average).append("\n");
-        result.append("Students with grades above average:\n");
+        result.append("Notas promedio: ").append(average).append("\n");
+        result.append("Estudiantes con calificaciones superiores al promedio:\n");
 
         for (Student student : students) {
             if (student.getGrade() > average) {
@@ -99,23 +99,23 @@ public class StudentGradesApp extends JFrame {
     private void saveStudents() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) {
             for (Student student : students) {
-                writer.println(student.tostring());
+                writer.println(student.toString());
             }
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error saving students.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error de guardado de estudiantes.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
     private void loadStudents() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
-            while ((line = reader.readLine()) != nul) {
+            while ((line = reader.readLine()) != null) {
                 students.add(Student.fromString(line));
             }
         } catch (FileNotFoundException e) {
             // File not found, no students to load
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error loading students.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error al cargar datos de estudiantes.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
