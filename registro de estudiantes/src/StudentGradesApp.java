@@ -11,7 +11,7 @@ public class StudentGradesApp extends JFrame {
     private JTextArea resultArea;
     private ArrayList<Student> students;
     private static final String FILE_PATH = "students.csv";
-    
+
     public StudentGradesApp() {
         students = new ArrayList<>();
         loadStudents();
@@ -23,3 +23,13 @@ public class StudentGradesApp extends JFrame {
 
         JLabel nameLabel = new JLabel("Name:");
         nameField = new JTextField(20);
+        JLabel gradeLabel = new JLabel("Grade:");
+        gradeField = new JTextField(5);
+
+        JButton addButton = new JButton("Add Student");
+        addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addStudent();
+            }
+        });
