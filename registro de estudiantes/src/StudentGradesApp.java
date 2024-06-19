@@ -56,7 +56,7 @@ public class StudentGradesApp extends JFrame {
 
 
     private void addStudent() {
-        String name = nameField.getText();
+        String name = nameField.gettext();
         double grade;
         try {
             grade = Double.parseDouble(gradeField.getText());
@@ -99,7 +99,7 @@ public class StudentGradesApp extends JFrame {
     private void saveStudents() {
         try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) {
             for (Student student : students) {
-                writer.println(student.toString());
+                writer.println(student.tostring());
             }
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Error saving students.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -109,7 +109,7 @@ public class StudentGradesApp extends JFrame {
     private void loadStudents() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != nul) {
                 students.add(Student.fromString(line));
             }
         } catch (FileNotFoundException e) {
@@ -118,4 +118,14 @@ public class StudentGradesApp extends JFrame {
             JOptionPane.showMessageDialog(this, "Error loading students.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                new StudentGradesApp().setVisible(true);
+            }
+        });
+    }
+}
 
