@@ -12,3 +12,14 @@ public class StudentGradesApp extends JFrame {
     private ArrayList<Student> students;
     private static final String FILE_PATH = "students.csv";
     
+    public StudentGradesApp() {
+        students = new ArrayList<>();
+        loadStudents();
+
+        setTitle("Student Grades");
+        setSize(400, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new FlowLayout());
+
+        JLabel nameLabel = new JLabel("Name:");
+        nameField = new JTextField(20);
