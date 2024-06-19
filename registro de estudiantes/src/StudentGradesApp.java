@@ -33,3 +33,23 @@ public class StudentGradesApp extends JFrame {
                 addStudent();
             }
         });
+
+        JButton calculateButton = new JButton("Calculate Average");
+        calculateButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                calculateAverage();
+            }
+        });
+
+        resultArea = new JTextArea(10, 30);
+        resultArea.setEditable(false);
+
+        add(nameLabel);
+        add(nameField);
+        add(gradeLabel);
+        add(gradeField);
+        add(addButton);
+        add(calculateButton);
+        add(new JScrollPane(resultArea));
+    }
