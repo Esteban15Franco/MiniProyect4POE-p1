@@ -95,3 +95,27 @@ public class StudentGradesApp extends JFrame {
 
         resultArea.setText(result.toString());
     }
+
+    private void saveStudents() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(FILE_PATH))) {
+            for (Student student : students) {
+                writer.println(student.toString());
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error saving students.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void loadStudents() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                students.add(Student.fromString(line));
+            }
+        } catch (FileNotFoundException e) {
+            // File not found, no students to load
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error loading students.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
