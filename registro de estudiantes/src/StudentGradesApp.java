@@ -113,7 +113,7 @@ public class StudentGradesApp extends JFrame {
                 students.add(Student.fromString(line));
             }
         } catch (FileNotFoundException e) {
-            // File not found, no students to load
+            
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Error al cargar datos de estudiantes.", "Error", JOptionPane.ERROR_MESSAGE);
         }
