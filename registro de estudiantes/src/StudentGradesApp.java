@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class StudentGradesApp extends JFrame {
+    private JTextField idField; 
     private JTextField nameField;
     private JTextField gradeField;
     private JTextArea resultArea;
@@ -21,9 +22,11 @@ public class StudentGradesApp extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
 
+        JLabel idLabel = new JLabel("Código:");
+        idField = new JTextField(10); 
         JLabel nameLabel = new JLabel("Nombre:");
         nameField = new JTextField(20);
-        JLabel gradeLabel = new JLabel("calificacion:");
+        JLabel gradeLabel = new JLabel("calificación:");
         gradeField = new JTextField(5);
 
         JButton addButton = new JButton("Añadir estudiante");
@@ -42,20 +45,31 @@ public class StudentGradesApp extends JFrame {
             }
         });
 
+        JButton searchButton = new JButton("Buscar estudiante");
+        searchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                searchStudent();
+            }
+        });
+
         resultArea = new JTextArea(10, 30);
         resultArea.setEditable(false);
 
+        add(idLabel);
+        add(idField);
         add(nameLabel);
         add(nameField);
         add(gradeLabel);
         add(gradeField);
         add(addButton);
         add(calculateButton);
+        add(searchButton);
         add(new JScrollPane(resultArea));
     }
 
-
     private void addStudent() {
+        String id = idField.getText();
         String name = nameField.getText();
         double grade;
         try {
@@ -65,8 +79,9 @@ public class StudentGradesApp extends JFrame {
             return;
         }
 
-        students.add(new Student(name, grade));
+        students.add(new Student(name, grade, id));
         saveStudents();
+        idField.setText(""); 
         nameField.setText("");
         gradeField.setText("");
     }
@@ -113,10 +128,22 @@ public class StudentGradesApp extends JFrame {
                 students.add(Student.fromString(line));
             }
         } catch (FileNotFoundException e) {
-            
+            // File not found, no students to load
         } catch (IOException e) {
             JOptionPane.showMessageDialog(this, "Error al cargar datos de estudiantes.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    // Nuevo método para buscar estudiante por código
+    private void searchStudent() {
+        String id = idField.getText();
+        for (Student student : students) {
+            if (student.getId().equals(id)) {
+                resultArea.setText("Estudiante encontrado:\n" + student.getName() + "\nCalificación: " + student.getGrade());
+                return;
+            }
+        }
+        resultArea.setText("Estudiante no encontrado.");
     }
 
     public static void main(String[] args) {
@@ -128,4 +155,3 @@ public class StudentGradesApp extends JFrame {
         });
     }
 }
-

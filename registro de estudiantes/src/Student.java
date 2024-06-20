@@ -1,10 +1,12 @@
 public class Student {
     private String name;
     private double grade;
+    private String id; 
 
-    public Student(String name, double grade) {
+    public Student(String name, double grade, String id) {
         this.name = name;
         this.grade = grade;
+        this.id = id;
     }
 
     public String getName() {
@@ -15,13 +17,17 @@ public class Student {
         return grade;
     }
 
+    public String getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
-        return name + "," + grade;
+        return id + "," + name + "," + grade; 
     }
 
     public static Student fromString(String line) {
         String[] parts = line.split(",");
-        return new Student(parts[0], Double.parseDouble(parts[1]));
+        return new Student(parts[1], Double.parseDouble(parts[2]), parts[0]); 
     }
 }
